@@ -195,7 +195,7 @@ public class ViewerOverlay2 {
     
     public String prepareReportMessage(LineCrossedVM type) {
     	String result ="";
-    	result = "type:"+type.getType()+ " - speed:"+"0" ;
+    	result = "type:"+type.getType()+ " - speed:"+type.getSpeed() ;
     	
     	
     	return result;

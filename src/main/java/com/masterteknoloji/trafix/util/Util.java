@@ -3,6 +3,7 @@ package com.masterteknoloji.trafix.util;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 import java.util.Random;
 
 import org.springframework.util.StringUtils;
@@ -112,5 +114,21 @@ public class Util {
 	    center.x = x / points.size();
 	    center.y = y / points.size();
 	    return center;
+	}
+	
+	public static Properties readPropertyFile() throws IOException {
+		final Properties myresources = new Properties();
+		FileInputStream in = new FileInputStream("trafix.properties");
+		myresources.load(in);
+		
+		return myresources;
+	}
+	
+	public static Properties createPropertyFile() throws IOException {
+		final Properties myresources = new Properties();
+		FileInputStream in = new FileInputStream("trafix.properties");
+		myresources.load(in);
+		
+		return myresources;
 	}
 }

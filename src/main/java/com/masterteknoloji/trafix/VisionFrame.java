@@ -7,6 +7,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -40,9 +41,10 @@ public class VisionFrame extends JFrame {
 	
     List<Color> colorList = new ArrayList<Color>();
 	
-	public VisionFrame() throws HeadlessException, InvocationTargetException, InterruptedException {
+	public VisionFrame() throws HeadlessException, InvocationTargetException, InterruptedException, IOException {
 		super();
 		createAndShowGUI();
+		dataService.getConnectionUrl();
 	}
 	private  void createAndShowGUI() throws InvocationTargetException, InterruptedException{
 		
@@ -58,7 +60,7 @@ public class VisionFrame extends JFrame {
 		prepareColor();
 	}
 	
-	public void play(AnalyzeOrderSummaryVM selected) {
+	public void play(AnalyzeOrderSummaryVM selected) throws IOException  {
 		
 		lineSummaryVMs = dataService.getLineList(selected.getScenarioId()); 
 		int i=0;
