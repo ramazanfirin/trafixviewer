@@ -74,6 +74,7 @@ public class TrafixViewer extends JFrame{
   }
 	
 	
+	
 	private  void createAndShowGUI() throws HeadlessException, InvocationTargetException, InterruptedException, IOException{
 	    
 		visionFrame = new VisionFrame();

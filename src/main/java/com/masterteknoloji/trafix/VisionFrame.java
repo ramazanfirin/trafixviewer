@@ -40,6 +40,8 @@ public class VisionFrame extends JFrame {
 	List<LineSummaryVM> lineSummaryVMs;
 	
     List<Color> colorList = new ArrayList<Color>();
+    
+    List<Timer> timerList = new ArrayList<Timer>();
 	
 	public VisionFrame() throws HeadlessException, InvocationTargetException, InterruptedException, IOException {
 		super();
@@ -56,12 +58,28 @@ public class VisionFrame extends JFrame {
 		JPanel imagePane = directTestPlayer.getImagePane();
 		jPanel.add(imagePane);
 		
+		addWindowListener(new java.awt.event.WindowAdapter() {
+	        public void windowClosing(java.awt.event.WindowEvent e) {
+	        	clearTimers();
+	        }
+	    });
+		
 		add(jPanel);
 		prepareColor();
 	}
 	
+	public void clearTimers() {
+		for (Iterator iterator = timerList.iterator(); iterator.hasNext();) {
+			Timer timer = (Timer) iterator.next();
+			timer.stop();
+		}
+		
+		timerList = new ArrayList<Timer>();
+	}
+	
 	public void play(AnalyzeOrderSummaryVM selected) throws IOException  {
 		
+		clearTimers();
 		lineSummaryVMs = dataService.getLineList(selected.getScenarioId()); 
 		int i=0;
 		for (Iterator iterator = lineSummaryVMs.iterator(); iterator.hasNext();) {
@@ -97,6 +115,7 @@ public class VisionFrame extends JFrame {
 						});
 			    	timer.setRepeats(false); // Only execute once
 			    	timer.start(); // Go go go!
+			    	timerList.add(timer);
 					}
     }
 	
@@ -121,6 +140,7 @@ public class VisionFrame extends JFrame {
 				});
 	    	timer.setRepeats(false); // Only execute once
 	    	timer.start(); // Go go go!
+	    	
     	}else {
     		System.out.println("line=null");
     	}

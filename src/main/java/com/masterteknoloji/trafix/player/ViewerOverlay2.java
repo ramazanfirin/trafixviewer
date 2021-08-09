@@ -162,7 +162,7 @@ public class ViewerOverlay2 {
 			for (Iterator iterator = lineSummaryVMs.iterator(); iterator.hasNext();) {
 				LineSummaryVM line = (LineSummaryVM) iterator.next();
 				Point centre = Util.findCentroid(line.getProjectedPointList());
-				g2.drawString(line.getCount().toString(), (int) centre.getX(), (int) centre.getY());
+				g2.drawString(line.getCount().toString(), (int) centre.getX(), ((int) centre.getY())+5);
 				
 			}
 
@@ -195,8 +195,12 @@ public class ViewerOverlay2 {
     
     public String prepareReportMessage(LineCrossedVM type) {
     	String result ="";
-    	result = "type:"+type.getType()+ " - speed:"+type.getSpeed() ;
-    	
+    	result = "type:"+type.getType()  ;
+    	if(type.getSpeed().longValue() != 0l)
+    		result = result+" - speed:"+type.getSpeed();
+    	else
+     		result = result+" - speed:...";
+    	   
     	
     	return result;
     }
