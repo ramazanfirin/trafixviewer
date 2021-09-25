@@ -2,11 +2,10 @@ package com.masterteknoloji.trafix;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
@@ -14,14 +13,19 @@ import java.util.List;
 import java.util.Properties;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.border.MatteBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableModel;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -46,7 +50,7 @@ public class TrafixViewer extends JFrame{
 	DataService dataService;
 	
 	String data[][] = {};
-	String column[] = { "ID", "STATE", "videoName", "videoPath", "scenarioPath" };
+	String column[] = { "ID", "DURUM", "VIDEO İSMİ","SENARYO İSMİ","BAŞLANGIÇ SAATİ","BİTİŞ SAATİ","VİDEO DOSYASI",  };
 	
 	DefaultTableModel model = new DefaultTableModel(data,column);
 	
@@ -95,13 +99,22 @@ public class TrafixViewer extends JFrame{
 		System.out.println("test 5");
 		visionFrame = new VisionFrame(args);
 		
-    	setSize(600, 800);
+    	setSize(1280, 720);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(jPanel);
 		//heckPropertiesFile();
 				
 		//JTable jtable = new JTable(model);
+		JLabel jLabel = new JLabel("TRAFIX VIEWER");
+		jLabel.setBounds(getWidth()/2-100, 10, 500, 100);
+		jLabel.setFont(new Font("Verdana", Font.PLAIN, 40));
+		add(jLabel);
+		
+		JLabel jLabel2 = new JLabel("Izlemek İçin Tablo üzerindeki Satıra Çift Tıklayınız");
+		jLabel2.setBounds(getWidth()/2-200, 50, 600, 100);
+		jLabel2.setFont(new Font("Verdana", Font.PLAIN, 20));
+		add(jLabel2);
 		
 		JTable jtable = new JTable(model) {
 	        private static final long serialVersionUID = 1L;
@@ -110,10 +123,24 @@ public class TrafixViewer extends JFrame{
 	                return false;               
 	        };
 	    };
+	    
+	    DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+	    
+	    TableModel tableModel = jtable.getModel();
+
+        for (int columnIndex = 0; columnIndex < tableModel.getColumnCount(); columnIndex++)
+        {
+        	jtable.getColumnModel().getColumn(columnIndex).setCellRenderer(rightRenderer);
+        }
 		
+        JTableHeader header = jtable.getTableHeader();
+        header.setBackground(Color.yellow);
+        header.setName("dfsdf");
+        
 		JScrollPane scrollPane = new JScrollPane(jtable);
 		scrollPane.setVisible(true);
-		scrollPane.setBounds(0, 0, 600, 100);
+		scrollPane.setBounds(0, 150, getWidth(), getHeight());
 		   
 		setLayout(null);
 		add(scrollPane);
@@ -189,7 +216,13 @@ public class TrafixViewer extends JFrame{
 		for (Iterator iterator = analyzeOrderSummaryVMs.iterator(); iterator.hasNext();) {
 			AnalyzeOrderSummaryVM analyzeOrderSummaryVM = (AnalyzeOrderSummaryVM) iterator.next();
 			
-			String[] satir = { analyzeOrderSummaryVM.getId().toString(), analyzeOrderSummaryVM.getState(),analyzeOrderSummaryVM.getVideoName(),analyzeOrderSummaryVM.getVideoPath(),analyzeOrderSummaryVM.getScenarioPath()  };
+			String[] satir = { analyzeOrderSummaryVM.getId().toString(), 
+					            analyzeOrderSummaryVM.getState(),
+					            analyzeOrderSummaryVM.getVideoName(),
+					            analyzeOrderSummaryVM.getStartDate(),
+					            analyzeOrderSummaryVM.getEndDate(),
+					            analyzeOrderSummaryVM.getScenarioPath(),
+					            analyzeOrderSummaryVM.getVideoPath(),};
 		    model.addRow(satir);
 		}
 		
