@@ -7,11 +7,13 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -109,7 +111,15 @@ public class VisionFrame extends JFrame {
 		//String intersectionDay = "D:\\KBB\\intersection\\input_multiple_regions.m4v";
 		//directTestPlayer.setConnectionUrl(intersectionDay);
 		directTestPlayer.setLineSummaryVMs(lineSummaryVMs);
-		directTestPlayer.setConnectionUrl("file:///"+selected.getVideoPath());
+		Properties properties = Util.readPropertyFile();
+		String localConnection = Util.readValueFromProperties(properties, "local.connection", "true");
+		if(localConnection.equals("true"))
+			directTestPlayer.setConnectionUrl("file:///"+selected.getVideoPath());
+		else {
+			File file = new File(selected.getVideoPath());
+			String webserverUrl =  Util.readValueFromProperties(properties, "webserver.url", "http://localhost:8000");
+			directTestPlayer.setConnectionUrl(webserverUrl+"/"+file.getName());
+		}
 		directTestPlayer.prepare();
 		directTestPlayer.play();
 	}

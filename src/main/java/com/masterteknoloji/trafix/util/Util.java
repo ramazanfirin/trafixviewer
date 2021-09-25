@@ -134,6 +134,17 @@ public class Util {
 		return myresources;
 	}
 	
+	public static String readValueFromProperties(Properties properties,String name,String defaultValue) {
+		String result;
+		
+		if(properties==null)
+			result = defaultValue;
+		else
+			result = properties.getProperty(name);
+		
+		return result;
+	}
+	
 	public static Properties createPropertyFile() throws IOException {
 		final Properties myresources = new Properties();
 		FileInputStream in = new FileInputStream("trafix.properties");
