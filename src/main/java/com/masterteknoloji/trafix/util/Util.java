@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -34,8 +35,7 @@ public class Util {
 //		return result;
 //	}
 	
-	public static List<Point> calculatePoint(LineSummaryVM lineSummaryVM ) {
-		String points = lineSummaryVM.getPoints();
+	public static List<Point> calculatePoint(String points) {
 		List<Point> list = getPointList(points);
 	
 		return list;
@@ -117,9 +117,19 @@ public class Util {
 	}
 	
 	public static Properties readPropertyFile() throws IOException {
-		final Properties myresources = new Properties();
-		FileInputStream in = new FileInputStream("trafix.properties");
-		myresources.load(in);
+		Properties myresources = new Properties();
+		try {
+			FileInputStream in = new FileInputStream("trafix.properties");
+			myresources.load(in);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 		
 		return myresources;
 	}

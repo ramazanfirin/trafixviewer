@@ -4,11 +4,10 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 import javax.annotation.PostConstruct;
 
@@ -19,7 +18,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.masterteknoloji.trafix.domain.dto.AnalyzeOrderSummaryVM;
 import com.masterteknoloji.trafix.domain.dto.LineCrossedVM;
 import com.masterteknoloji.trafix.domain.dto.LineSummaryVM;
-import com.masterteknoloji.trafix.domain.dto.VideoRecordQueryVM;
 import com.masterteknoloji.trafix.util.Util;
 
 @Service
@@ -27,15 +25,31 @@ public class DataService {
 	
 	String connectionUrl ;
 	
-	@PostConstruct
+	
+	
+	public DataService() throws IOException{
+		super();
+		// TODO Auto-generated constructor stub
+		getConnectionUrl();
+	}
+
+	//@PostConstruct
 	public void getConnectionUrl() throws IOException {
-		connectionUrl = Util.readPropertyFile().getProperty("connection.url");
+		Properties properties = Util.readPropertyFile();
+		System.out.println("getConnectionUrl basladi");
+		
+		if(properties!=null)
+			connectionUrl = properties.getProperty("connection.url");
+		else
+			connectionUrl = "http://localhost:8080";
+		
+		System.out.println("connectionUrl="+connectionUrl);
 	}
 
 	public List<AnalyzeOrderSummaryVM> getAnalyzeOrderList() throws IOException {
 		List<AnalyzeOrderSummaryVM> result = new ArrayList<AnalyzeOrderSummaryVM>();
-
-		URL url = new URL(connectionUrl+"/api/analyze-orders/getAllSummary");
+		System.out.println("getAnalyzeOrderList started");
+		URL url = new URL(connectionUrl+"/api/analyze-orders/getAllSummary?size=100&sort=id%2Cdesc");
 		HttpURLConnection con = (HttpURLConnection) url.openConnection();
 		con.setRequestMethod("GET");
 		// con.setRequestProperty ("Authorization", "Bearer "+token);
@@ -49,7 +63,7 @@ public class DataService {
 		}
 		in.close();
 
-		System.out.println(content.toString());
+		//System.out.println(content.toString());
 		ObjectMapper mapper = new ObjectMapper();
 		mapper.findAndRegisterModules();
 		result = mapper.readValue(content.toString(), new TypeReference<List<AnalyzeOrderSummaryVM>>() {

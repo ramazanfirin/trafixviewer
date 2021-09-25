@@ -32,6 +32,7 @@ import org.springframework.context.annotation.ComponentScan;
 import com.masterteknoloji.trafix.domain.dto.AnalyzeOrderSummaryVM;
 import com.masterteknoloji.trafix.service.DataService;
 import com.masterteknoloji.trafix.util.Util;
+import com.sun.jna.NativeLibrary;
 
 @SpringBootApplication
 @ComponentScan("com")
@@ -50,21 +51,36 @@ public class TrafixViewer extends JFrame{
 	DefaultTableModel model = new DefaultTableModel(data,column);
 	
 	List<AnalyzeOrderSummaryVM> analyzeOrderSummaryVMs;
+	
+	static String analyzeOrderId  =null;
 
 	public static void main(String[] args){
+		
+		System.out.println("args = " +args.length);
+		for (int i = 0; i < args.length; i++) {
+			System.out.println("args : "+ args[i]);
+		}
 
+		
+		
+		NativeLibrary.addSearchPath("vlc", "/snap/vlc/2344/usr/lib/");
+		System.out.println("test 2");
 		ConfigurableApplicationContext ctx = new SpringApplicationBuilder(TrafixViewer.class)
               .headless(false).run(args);
-
+		System.out.println("test 3");
       EventQueue.invokeLater(() -> {
 
     	  TrafixViewer ex = (TrafixViewer)ctx.getBean(TrafixViewer.class);
       	try {
-			ex.createAndShowGUI();
+      		System.out.println("test 4");
+			ex.createAndShowGUI(args);
+			
 		} catch (HeadlessException | InvocationTargetException | InterruptedException e) {
 			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
+			System.out.println("test 7");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -75,15 +91,15 @@ public class TrafixViewer extends JFrame{
 	
 	
 	
-	private  void createAndShowGUI() throws HeadlessException, InvocationTargetException, InterruptedException, IOException{
-	    
-		visionFrame = new VisionFrame();
+	private  void createAndShowGUI(String[] args) throws HeadlessException, InvocationTargetException, InterruptedException, IOException{
+		System.out.println("test 5");
+		visionFrame = new VisionFrame(args);
 		
     	setSize(600, 800);
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setContentPane(jPanel);
-		checkPropertiesFile();
+		//heckPropertiesFile();
 				
 		//JTable jtable = new JTable(model);
 		
@@ -101,7 +117,7 @@ public class TrafixViewer extends JFrame{
 		   
 		setLayout(null);
 		add(scrollPane);
-		
+		System.out.println("test 6");
 		
 		jtable.addMouseListener(new MouseAdapter(){
 			  public void mouseClicked(MouseEvent event) {
@@ -128,6 +144,7 @@ public class TrafixViewer extends JFrame{
 			});
 		
 		try {
+			System.out.println("test 7");
 			getData();
 			jtable.setBorder(new MatteBorder(2, 2, 2, 2, (Color) Color.GRAY));
 			
@@ -143,6 +160,21 @@ public class TrafixViewer extends JFrame{
 			//jtable.setDefaultEditor(Cell.class, new MyTableCellEditor());
 			
 			jtable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			
+			if(args.length>0) {
+				Long analyzeOrderId = new Long(args[0]);
+				for (Iterator iterator = analyzeOrderSummaryVMs.iterator(); iterator.hasNext();) {
+					AnalyzeOrderSummaryVM analyzeOrderSummaryVM = (AnalyzeOrderSummaryVM) iterator.next();
+					//System.out.println(analyzeOrderSummaryVM.getId() + ","+analyzeOrderId );
+					if(analyzeOrderSummaryVM.getId().longValue()==analyzeOrderId.longValue()) {
+						System.out.println("eşitlik sağlandı");
+						this.setAlwaysOnTop(false);
+						this.setVisible(false);
+						visionFrame.setVisible(true);
+						visionFrame.play(analyzeOrderSummaryVM);
+					}
+			}
+			}
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

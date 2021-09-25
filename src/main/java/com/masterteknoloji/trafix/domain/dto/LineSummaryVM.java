@@ -13,10 +13,18 @@ public class LineSummaryVM {
 	Long id;
 	String name;
 	String points;
+	String entryPolygonPoints;
+	String exitPolygonPoints;
 	
 	List<Point> pointList = new ArrayList<Point>();
+	List<Point> entryPointList = new ArrayList<Point>();
+	List<Point> exitPointList = new ArrayList<Point>();
+	
 	
 	List<Point> projectedPointList = new ArrayList<Point>();
+	List<Point> entryProjectedPointList = new ArrayList<Point>();
+	List<Point> exitProjectedPointList = new ArrayList<Point>();
+	
 	
 	Long count = 0l;
 	
@@ -89,4 +97,41 @@ public class LineSummaryVM {
 	public void setLastDatas(Queue<LineCrossedVM> lastDatas) {
 		this.lastDatas = lastDatas;
 	}
+	public String getEntryPolygonPoints() {
+		return entryPolygonPoints;
+	}
+	public void setEntryPolygonPoints(String entryPolygonPoints) {
+		this.entryPolygonPoints = entryPolygonPoints;
+	}
+	public String getExitPolygonPoints() {
+		return exitPolygonPoints;
+	}
+	public void setExitPolygonPoints(String exitPolygonPoints) {
+		this.exitPolygonPoints = exitPolygonPoints;
+	}
+	public List<Point> getEntryPointList() {
+		return entryPointList;
+	}
+	public void setEntryPointList(List<Point> entryPointList) {
+		this.entryPointList = entryPointList;
+	}
+	public List<Point> getExitPointList() {
+		return exitPointList;
+	}
+	public void setExitPointList(List<Point> exitPointList) {
+		this.exitPointList = exitPointList;
+	}
+	public List<Point> getEntryProjectedPointList() {
+		return entryProjectedPointList;
+	}
+	public void setEntryProjectedPointList(List<Point> entryProjectedPointList) {
+		this.entryProjectedPointList = entryProjectedPointList;
+	}
+	public List<Point> getExitProjectedPointList() {
+		return exitProjectedPointList;
+	}
+	public void setExitProjectedPointList(List<Point> exitProjectedPointList) {
+		this.exitProjectedPointList = exitProjectedPointList;
+	}
+	
 }

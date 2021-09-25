@@ -43,14 +43,14 @@ public class VisionFrame extends JFrame {
     
     List<Timer> timerList = new ArrayList<Timer>();
 	
-	public VisionFrame() throws HeadlessException, InvocationTargetException, InterruptedException, IOException {
+	public VisionFrame(String[] args) throws HeadlessException, InvocationTargetException, InterruptedException, IOException {
 		super();
-		createAndShowGUI();
+		createAndShowGUI(args);
 		dataService.getConnectionUrl();
 	}
-	private  void createAndShowGUI() throws InvocationTargetException, InterruptedException{
+	private  void createAndShowGUI(String[] args) throws InvocationTargetException, InterruptedException{
 		
-		directTestPlayer = new ViewerOverlay2(viewWitdh, viewHeight,null);
+		directTestPlayer = new ViewerOverlay2(viewWitdh, viewHeight,args);
 		
 		setSize(1280, 720);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,8 +84,17 @@ public class VisionFrame extends JFrame {
 		int i=0;
 		for (Iterator iterator = lineSummaryVMs.iterator(); iterator.hasNext();) {
 			LineSummaryVM lineSummaryVM = (LineSummaryVM) iterator.next();
-			lineSummaryVM.setPointList(Util.calculatePoint(lineSummaryVM));
+			
+			lineSummaryVM.setPointList(Util.calculatePoint(lineSummaryVM.getPoints()));
 			lineSummaryVM.setProjectedPointList(Util.calculateProjectedListPoint(lineSummaryVM.getPointList(),832 ,468,viewWitdh, viewHeight));
+			
+			lineSummaryVM.setEntryPointList(Util.calculatePoint(lineSummaryVM.getEntryPolygonPoints()));
+			lineSummaryVM.setEntryProjectedPointList(Util.calculateProjectedListPoint(lineSummaryVM.getEntryPointList(),832 ,468,viewWitdh, viewHeight));
+			
+			lineSummaryVM.setExitPointList(Util.calculatePoint(lineSummaryVM.getExitPolygonPoints()));
+			lineSummaryVM.setExitProjectedPointList(Util.calculateProjectedListPoint(lineSummaryVM.getExitPointList(),832 ,468,viewWitdh, viewHeight));
+			
+			
 			Point centre = Util.findCentroid(lineSummaryVM.getProjectedPointList());
 			Rectangle rectangle = new Rectangle(centre,new Dimension(280, 100));
 			lineSummaryVM.setRectangle(rectangle);

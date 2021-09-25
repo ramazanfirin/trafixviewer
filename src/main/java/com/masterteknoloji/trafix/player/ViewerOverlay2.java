@@ -44,6 +44,8 @@ import com.masterteknoloji.trafix.domain.dto.LineCrossedVM;
 import com.masterteknoloji.trafix.domain.dto.LineSummaryVM;
 import com.masterteknoloji.trafix.util.Util;
 
+import uk.co.caprica.vlcj.player.MediaPlayer;
+import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
@@ -111,7 +113,14 @@ public class ViewerOverlay2 {
         factory = new MediaPlayerFactory(args);
         mediaPlayer = factory.newDirectMediaPlayer(new TestBufferFormatCallback(), new TestRenderCallback());
 
-        
+        if(args.length>0) {
+	        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+	        	   @Override
+	        	   public void finished(MediaPlayer mediaPlayer) {
+	        		   System.exit(0);
+	        	   }
+	        	});
+    	} 
     }
 
     @SuppressWarnings("serial")
@@ -149,8 +158,21 @@ public class ViewerOverlay2 {
 					Point point = (Point) iterator2.next();
 					polygon3.addPoint(point.x, point.y);
 				}
-
 				g2.fillPolygon(polygon3);
+				
+				Polygon entryPolygon = new Polygon();
+				for (Iterator iterator2 = lineSummaryVM.getEntryProjectedPointList().iterator(); iterator2.hasNext();) {
+					Point point = (Point) iterator2.next();
+					entryPolygon.addPoint(point.x, point.y);
+				}
+				g2.drawPolygon(entryPolygon);
+				
+				Polygon exitPolygon = new Polygon();
+				for (Iterator iterator2 = lineSummaryVM.getExitProjectedPointList().iterator(); iterator2.hasNext();) {
+					Point point = (Point) iterator2.next();
+					exitPolygon.addPoint(point.x, point.y);
+				}
+				g2.drawPolygon(exitPolygon);
 				i++;
 			}
 
