@@ -1,0 +1,171 @@
+{
+  "sessionId" : "168",
+  "path" : "/home/ramazan/Desktop/videos/input_multiple_regions.m4v",
+  "count" : true,
+  "classes" : {
+    "car" : true,
+    "bus" : true,
+    "truck" : true,
+    "bike" : true,
+    "person" : true
+  },
+  "directions" : {
+    "regions" : [ {
+      "label" : "406",
+      "points" : [ {
+        "x" : 180,
+        "y" : 323
+      }, {
+        "x" : 333,
+        "y" : 250
+      }, {
+        "x" : 376,
+        "y" : 249
+      }, {
+        "x" : 201,
+        "y" : 324
+      } ],
+      "type" : "ENTRY"
+    }, {
+      "label" : "408",
+      "points" : [ {
+        "x" : 509,
+        "y" : 709
+      }, {
+        "x" : 1149,
+        "y" : 472
+      }, {
+        "x" : 1081,
+        "y" : 432
+      }, {
+        "x" : 396,
+        "y" : 706
+      } ],
+      "type" : "EXIT"
+    }, {
+      "label" : "412",
+      "points" : [ {
+        "x" : 856,
+        "y" : 226
+      }, {
+        "x" : 1076,
+        "y" : 258
+      }, {
+        "x" : 1081,
+        "y" : 280
+      }, {
+        "x" : 835,
+        "y" : 250
+      } ],
+      "type" : "EXIT"
+    }, {
+      "label" : "410",
+      "points" : [ {
+        "x" : 596,
+        "y" : 213
+      }, {
+        "x" : 835,
+        "y" : 240
+      }, {
+        "x" : 809,
+        "y" : 249
+      }, {
+        "x" : 578,
+        "y" : 221
+      } ],
+      "type" : "ENTRY"
+    }, {
+      "label" : "415",
+      "points" : [ {
+        "x" : 124,
+        "y" : 363
+      }, {
+        "x" : 210,
+        "y" : 333
+      }, {
+        "x" : 270,
+        "y" : 426
+      }, {
+        "x" : 180,
+        "y" : 450
+      } ],
+      "type" : "EXIT"
+    }, {
+      "label" : "414",
+      "points" : [ {
+        "x" : 1181,
+        "y" : 298
+      }, {
+        "x" : 1115,
+        "y" : 400
+      }, {
+        "x" : 1080,
+        "y" : 389
+      }, {
+        "x" : 1150,
+        "y" : 283
+      } ],
+      "type" : "ENTRY"
+    }, {
+      "label" : "423",
+      "points" : [ {
+        "x" : 478,
+        "y" : 236
+      }, {
+        "x" : 540,
+        "y" : 212
+      }, {
+        "x" : 578,
+        "y" : 215
+      }, {
+        "x" : 521,
+        "y" : 252
+      } ],
+      "type" : "EXIT"
+    }, {
+      "label" : "418",
+      "points" : [ {
+        "x" : 278,
+        "y" : 503
+      }, {
+        "x" : 461,
+        "y" : 710
+      }, {
+        "x" : 547,
+        "y" : 707
+      }, {
+        "x" : 330,
+        "y" : 481
+      } ],
+      "type" : "ENTRY"
+    } ],
+    "connections" : [ {
+      "entry" : "405",
+      "exit" : "407"
+    }, {
+      "entry" : "405",
+      "exit" : "411"
+    }, {
+      "entry" : "409",
+      "exit" : "416"
+    }, {
+      "entry" : "409",
+      "exit" : "407"
+    }, {
+      "entry" : "413",
+      "exit" : "416"
+    }, {
+      "entry" : "413",
+      "exit" : "424"
+    }, {
+      "entry" : "417",
+      "exit" : "411"
+    }, {
+      "entry" : "417",
+      "exit" : "424"
+    } ]
+  },
+  "speed" : [ ],
+  "showVisulationWindow" : false,
+  "videoType" : "INTERSERCTION"
+}

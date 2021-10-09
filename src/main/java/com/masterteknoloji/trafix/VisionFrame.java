@@ -90,12 +90,12 @@ public class VisionFrame extends JFrame {
 			lineSummaryVM.setPointList(Util.calculatePoint(lineSummaryVM.getPoints()));
 			lineSummaryVM.setProjectedPointList(Util.calculateProjectedListPoint(lineSummaryVM.getPointList(),832 ,468,viewWitdh, viewHeight));
 			
-			lineSummaryVM.setEntryPointList(Util.calculatePoint(lineSummaryVM.getEntryPolygonPoints()));
-			lineSummaryVM.setEntryProjectedPointList(Util.calculateProjectedListPoint(lineSummaryVM.getEntryPointList(),832 ,468,viewWitdh, viewHeight));
-			
-			lineSummaryVM.setExitPointList(Util.calculatePoint(lineSummaryVM.getExitPolygonPoints()));
-			lineSummaryVM.setExitProjectedPointList(Util.calculateProjectedListPoint(lineSummaryVM.getExitPointList(),832 ,468,viewWitdh, viewHeight));
-			
+//			lineSummaryVM.setEntryPointList(Util.calculatePoint(lineSummaryVM.getEntryPolygonPoints()));
+//			lineSummaryVM.setEntryProjectedPointList(Util.calculateProjectedListPoint(lineSummaryVM.getEntryPointList(),832 ,468,viewWitdh, viewHeight));
+//			
+//			lineSummaryVM.setExitPointList(Util.calculatePoint(lineSummaryVM.getExitPolygonPoints()));
+//			lineSummaryVM.setExitProjectedPointList(Util.calculateProjectedListPoint(lineSummaryVM.getExitPointList(),832 ,468,viewWitdh, viewHeight));
+//			
 			
 			Point centre = Util.findCentroid(lineSummaryVM.getProjectedPointList());
 			Rectangle rectangle = new Rectangle(centre,new Dimension(280, 100));
@@ -168,7 +168,7 @@ public class VisionFrame extends JFrame {
 	public LineSummaryVM findLine(Long id) {
 		for (Iterator iterator = lineSummaryVMs.iterator(); iterator.hasNext();) {
 			LineSummaryVM lineSummaryVM = (LineSummaryVM) iterator.next();
-			if(lineSummaryVM.getId()==id)
+			if(lineSummaryVM.getId().longValue()==id.longValue())
 				return lineSummaryVM;
 		}
 		

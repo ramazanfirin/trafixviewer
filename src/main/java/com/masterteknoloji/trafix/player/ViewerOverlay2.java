@@ -160,19 +160,19 @@ public class ViewerOverlay2 {
 				}
 				g2.fillPolygon(polygon3);
 				
-				Polygon entryPolygon = new Polygon();
-				for (Iterator iterator2 = lineSummaryVM.getEntryProjectedPointList().iterator(); iterator2.hasNext();) {
-					Point point = (Point) iterator2.next();
-					entryPolygon.addPoint(point.x, point.y);
-				}
-				g2.drawPolygon(entryPolygon);
-				
-				Polygon exitPolygon = new Polygon();
-				for (Iterator iterator2 = lineSummaryVM.getExitProjectedPointList().iterator(); iterator2.hasNext();) {
-					Point point = (Point) iterator2.next();
-					exitPolygon.addPoint(point.x, point.y);
-				}
-				g2.drawPolygon(exitPolygon);
+//				Polygon entryPolygon = new Polygon();
+//				for (Iterator iterator2 = lineSummaryVM.getEntryProjectedPointList().iterator(); iterator2.hasNext();) {
+//					Point point = (Point) iterator2.next();
+//					entryPolygon.addPoint(point.x, point.y);
+//				}
+//				g2.drawPolygon(entryPolygon);
+//				
+//				Polygon exitPolygon = new Polygon();
+//				for (Iterator iterator2 = lineSummaryVM.getExitProjectedPointList().iterator(); iterator2.hasNext();) {
+//					Point point = (Point) iterator2.next();
+//					exitPolygon.addPoint(point.x, point.y);
+//				}
+//				g2.drawPolygon(exitPolygon);
 				i++;
 			}
 
