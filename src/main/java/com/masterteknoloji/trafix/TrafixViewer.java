@@ -65,10 +65,15 @@ public class TrafixViewer extends JFrame{
 			System.out.println("args : "+ args[i]);
 		}
 
+		System.out.println("arch:"+System.getProperty("sun.arch.data.model"));
+
+		System.setProperty("jna.library.path", "/snap/vlc/current/usr/lib/");
 		
+		System.out.println("path:"+System.getenv("$LD_LIBRARY_PATH")); 
 		
-		NativeLibrary.addSearchPath("vlc", "/snap/vlc/2344/usr/lib/");
+		NativeLibrary.addSearchPath("vlc", "/snap/vlc/current/usr/lib/");
 		System.out.println("test 2");
+		 
 		ConfigurableApplicationContext ctx = new SpringApplicationBuilder(TrafixViewer.class)
               .headless(false).run(args);
 		System.out.println("test 3");

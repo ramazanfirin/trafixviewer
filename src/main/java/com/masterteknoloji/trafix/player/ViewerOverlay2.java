@@ -40,10 +40,6 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
-import com.masterteknoloji.trafix.domain.dto.LineCrossedVM;
-import com.masterteknoloji.trafix.domain.dto.LineSummaryVM;
-import com.masterteknoloji.trafix.util.Util;
-
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 import uk.co.caprica.vlcj.player.MediaPlayerFactory;
@@ -52,6 +48,11 @@ import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallbackAdapter;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
+
+import com.masterteknoloji.trafix.VisionFrame;
+import com.masterteknoloji.trafix.domain.dto.LineCrossedVM;
+import com.masterteknoloji.trafix.domain.dto.LineSummaryVM;
+import com.masterteknoloji.trafix.util.Util;
 
 /**
  * This simple test player shows how to get direct access to the video frame data.
@@ -98,7 +99,7 @@ public class ViewerOverlay2 {
     
 
 
-    public ViewerOverlay2(int width, int height,String[] args) throws InterruptedException, InvocationTargetException {
+    public ViewerOverlay2(int width, int height,String[] args,VisionFrame visionFrame) throws InterruptedException, InvocationTargetException {
         image = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().getDefaultConfiguration().createCompatibleImage(width, height);
         image.setAccelerationPriority(1.0f);
         
@@ -113,14 +114,26 @@ public class ViewerOverlay2 {
         factory = new MediaPlayerFactory(args);
         mediaPlayer = factory.newDirectMediaPlayer(new TestBufferFormatCallback(), new TestRenderCallback());
 
-        if(args.length>0) {
+        //if(args.length>0) {
 	        mediaPlayer.addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 	        	   @Override
 	        	   public void finished(MediaPlayer mediaPlayer) {
 	        		   System.exit(0);
 	        	   }
+	        	   
+	        	   @Override
+	        	   public void playing(MediaPlayer mediaPlayer) {
+//	        		   try {
+//						//Thread.currentThread().sleep(350);
+//					} catch (InterruptedException e) {
+//						// TODO Auto-generated catch block
+//						e.printStackTrace();
+//					}
+	        		   System.out.println("fps:"+mediaPlayer.getFps());
+	        		   visionFrame.processData(mediaPlayer.getFps());
+	        	   }
 	        	});
-    	} 
+    	//} 
     }
 
     @SuppressWarnings("serial")
@@ -249,7 +262,10 @@ public class ViewerOverlay2 {
    
  
  public void play() {
+	 
 	 mediaPlayer.playMedia(connectionUrl);
+	 
+	 
  }
 
  public void prepare() {

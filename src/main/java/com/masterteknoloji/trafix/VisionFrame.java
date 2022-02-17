@@ -44,6 +44,8 @@ public class VisionFrame extends JFrame {
     List<Color> colorList = new ArrayList<Color>();
     
     List<Timer> timerList = new ArrayList<Timer>();
+    
+    List<LineCrossedVM> lineCrossedVMs;
 	
 	public VisionFrame(String[] args) throws HeadlessException, InvocationTargetException, InterruptedException, IOException {
 		super();
@@ -52,7 +54,7 @@ public class VisionFrame extends JFrame {
 	}
 	private  void createAndShowGUI(String[] args) throws InvocationTargetException, InterruptedException{
 		
-		directTestPlayer = new ViewerOverlay2(viewWitdh, viewHeight,args);
+		directTestPlayer = new ViewerOverlay2(viewWitdh, viewHeight,args,this);
 		
 		setSize(1280, 720);
 		//setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,6 +76,7 @@ public class VisionFrame extends JFrame {
 		for (Iterator iterator = timerList.iterator(); iterator.hasNext();) {
 			Timer timer = (Timer) iterator.next();
 			timer.stop();
+	
 		}
 		
 		timerList = new ArrayList<Timer>();
@@ -105,8 +108,8 @@ public class VisionFrame extends JFrame {
 			i++;
 		}
 		
-		List<LineCrossedVM> lineCrossedVMs = dataService.getCrossData(selected.getId()); 
-		processdata(lineCrossedVMs);
+		lineCrossedVMs = dataService.getCrossData(selected.getId()); 
+		
 		
 		//String intersectionDay = "D:\\KBB\\intersection\\input_multiple_regions.m4v";
 		//directTestPlayer.setConnectionUrl(intersectionDay);
@@ -122,11 +125,19 @@ public class VisionFrame extends JFrame {
 		}
 		directTestPlayer.prepare();
 		directTestPlayer.play();
+		//processdata(lineCrossedVMs);
 	}
 	
-	public void processdata(List<LineCrossedVM> lineCrossedVMs) {
+	public void processData(float fps){
+		processdata(lineCrossedVMs,fps);
+	}
+	
+	public void processdata(List<LineCrossedVM> lineCrossedVMs,float fps) {
     			for (LineCrossedVM line : lineCrossedVMs) {
-					Timer timer = new Timer(line.getDuration().intValue(), new ActionListener() {
+    			//	Double d = 25d/fps;
+    				Double d = 1d;
+    				Double time = line.getDuration()/d;
+					Timer timer = new Timer(time.intValue(), new ActionListener() {
 						  @Override
 						  public void actionPerformed(ActionEvent arg0) {
 							lineCrossed(line);

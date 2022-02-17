@@ -1,10 +1,11 @@
 Manifest-Version: 1.0
-Built-By: root
-Build-Jdk: 16.0.1
 Implementation-Title: trafixviewer
 Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: root
 Implementation-Vendor-Id: trafixviewer
-Implementation-Vendor: Pivotal Software, Inc.
-Implementation-URL: http://projects.spring.io/spring-boot/trafixviewer/
+Build-Jdk: 1.8.0_312
+Implementation-URL: http://projects.spring.io/spring-boot/trafixviewer
+ /
 Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
 
